@@ -13,9 +13,23 @@
                         <td>Your Email</td>
                         <td><?php echo $details->email; ?></td>
                       </tr>
+                      <tr>
+                        <td>First Name</td>
+                        <td><?php echo $details->firstname; ?></td>
+                      </tr>
+                      <tr>
+                        <td>Last Name</td>
+                        <td><?php echo $details->lastname; ?></td>
+                      </tr>
+                      <tr>
+                        <td>Phone number</td>
+                        <td><?php echo $details->phone; ?></td>
+                      </tr>
                   </tbody>
                 </table>
               </div>
             </div>
+              
           </div>
+            
          </div>

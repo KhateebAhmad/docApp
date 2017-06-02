@@ -23,6 +23,9 @@
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="<?php echo base_url(); ?>js/ie10-viewport-bug-workaround.js"></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>js/jquery.min.js"></script>
+    <script type="text/javascript" src="<?php echo base_url(); ?>js/notify/bootstrap.min.js"></script>
+    <script type="text/javascript" src="<?php echo base_url(); ?>js/notify/bootbox.min.js"></script>
+    
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -38,15 +41,41 @@
         <nav>
           <ul class="nav nav-pills pull-right">
             <li role="presentation"><a href="<?php echo base_url();?>">Home</a></li>
-            <li role="presentation" class="active"><a href="<?php echo base_url('login');?>">Login</a></li>            
-            <li role="presentation" ><a href="<?php echo base_url('signup');?>">Signup</a></li>
+            <li role="presentation" class="active"><a href="<?php echo base_url('/index.php/login');?>">Login</a></li>            
+            <li role="presentation" ><a href="<?php echo base_url('/index.php/signup');?>">Signup</a></li>
           </ul>
         </nav>
         <h3 class="text-muted">Travel Guide</h3>
       </div>
+    <?if($this->input->get('logout',0)):?>
+        <script>
+            var dialog = bootbox.dialog({ 
+                size:"small",
+                message: '<div class="text-center">Session out</div>',
+                closeButton:false
+            });
+            function myFunction() {
+                setTimeout(function(){
+                    dialog.modal('hide');
+                }, 2000);
+            }
+            myFunction();
+        </script>
+    <?endif;?>
+
      </div> <!-- /container -->	
 			<?php $att = array('class' => 'form-signin');?>
 			<?php echo form_open('login/validate_credentials', $att); ?>
+            <?
+                $booking = $this->input->get('is_booking',0);
+                $guide_id = $this->input->get('guide',0);
+                $location_id = $this->input->get('location',0);
+            ?>
+            <?if(isset($booking) && $booking):?>
+                <input type="hidden" name="is_booking" value="1">
+                <input type="hidden" name="guide_id" value="<?=$guide_id?>">
+                <input type="hidden" name="location_id" value="<?=$location_id?>">
+            <?endif;?>
 		    <div class="col-md-4 col-md-offset-4 well">
           	 <?php echo form_open('signup/add_user'); ?>
              <legend>Please login</legend>

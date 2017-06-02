@@ -37,9 +37,9 @@
       <div class="header clearfix">
         <nav>
           <ul class="nav nav-pills pull-right">
-            <li role="presentation"><a href="/travel">Home</a></li>
-            <li role="presentation"><a href="<?php echo base_url('login');?>">Login</a></li>            
-            <li role="presentation"  class="active"><a href="<?php echo base_url('signup');?>">Signup</a></li>
+            <li role="presentation"><a href="/index.php">Home</a></li>
+            <li role="presentation"><a href="<?php echo base_url('/index.php/login');?>">Login</a></li>            
+            <li role="presentation"  class="active"><a href="<?php echo base_url('/index.php/signup');?>">Signup</a></li>
           </ul>
         </nav>
         <h3 class="text-muted">Travel Guide</h3>
@@ -51,20 +51,20 @@
             <div class="col-sm-6 col-md-10">
               <div class="form-group">
                 <label for="firstname">First Name</label>
-                <input type="text" class="form-control" id="firstname" placeholder="First Name" name="firstname" value="<?php echo set_value('First Name'); ?>">
+                <input type="text" class="form-control" id="firstname" placeholder="First Name" name="firstname" value="<?php echo set_value('firstname'); ?>">
                 <?php echo form_error('firstname'); ?>
               </div>
               <div class="form-group">
                 <label for="lastname">Last Name</label>
-                <input type="text" class="form-control" id="lastname" name="lastname" placeholder="Last Name" value="<?php echo set_value('Last Name'); ?>">
+                <input type="text" class="form-control" id="lastname" name="lastname" placeholder="Last Name" value="<?php echo set_value('lastname'); ?>">
                 <?php echo form_error('lastname'); ?>
               </div>        
               <div class="form-group">
                 <label for="company_currency">Signup As</label>
                 <select class="form-control" id="role" name="role">
-                <option value="0">Select Your Role</option>
-                <option value="1">User</option>
-                <option value="2">Guide</option>  
+                <option value="0" <?if(set_value('role') == 0):?> selected="true" <?endif;?>>Select Your Role</option>
+                <option value="1" <?if(set_value('role') == 1):?> selected="true" <?endif;?>>User</option>
+                <option value="2" <?if(set_value('role') == 2):?> selected="true" <?endif;?>>Guide</option>  
                 </select>
                 <?php echo form_error('role'); ?>
               </div>
@@ -75,7 +75,7 @@
               </div>                                         
               <div class="form-group">
                 <label for="phone">Phone number</label>
-                <input type="text" class="form-control" id="phone" placeholder="Phone Number" name="phone" value="<?php echo set_value('Phone number'); ?>">
+                <input type="text" class="form-control" id="phone" placeholder="Phone Number" name="phone" maxlength="10" value="<?php echo set_value('phone'); ?>">
                 <?php echo form_error('phone'); ?>
               </div>
               <div class="form-group">
@@ -85,7 +85,7 @@
               </div>
               <div class="form-group">
                 <label for="passagain">Confirm Password</label>
-                <input type="passagain" class="form-control" id="passagain" placeholder="Please Confirm Password" name="passagain" value="<?php echo set_value('passagain'); ?>">
+                <input type="password" class="form-control" id="passagain" placeholder="Please Confirm Password" name="passagain" value="<?php echo set_value('passagain'); ?>">
                 <?php echo form_error('passagain'); ?>
               </div>              
               <button type="submit" class="btn btn-success" value="submit"><span class="icon-checkmark"></span> Signup  </button>
