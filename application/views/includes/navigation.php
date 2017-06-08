@@ -1,4 +1,7 @@
 <?php $page = $this->uri->segment(2);
+if(!empty($this->uri->segment(3))){
+    $page = $this->uri->segment(3);
+}
 ?>
  <div class="col-sm-2 col-md-1 sidebar">
           <ul class="nav nav-sidebar">
@@ -29,7 +32,13 @@
             <li <?php if ($page == "access"){ echo "class='active'";} ?>>
               <a href="<?php echo base_url() ?>index.php/admin/access">
                 <div class="nav-icon"><span class="icon-switch"></span></div>
-                <div class="nav-title">Bookings</div>
+                <div class="nav-title">Access</div>
+              </a>
+            </li>
+            <li <?php if ($page == "earning"){ echo "class='active'";} ?>>
+              <a href="<?php echo base_url() ?>index.php/admin/bookings/earning">
+                <div class="nav-icon"><span class="fa fa-money"></span></div>
+                <div class="nav-title">Earning</div>
               </a>
             </li>
           </ul>

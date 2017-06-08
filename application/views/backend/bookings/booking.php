@@ -3,7 +3,7 @@
           <div class="row" style="margin-right:0px;">
             <h1 class="page-header"><?php if($this->session->userdata('role') == 1) echo "User "; else echo "Guide "?>Booking List</h1>
           </div>
-        
+        <?$this->load->model('booking');?>
         <div class="row" >
             <div class="col-md-12" style="padding-left:0px;">
               <div class="panel panel-default">
@@ -17,9 +17,10 @@
                         <th>E-mail</th>
                         <th>Phone</th>
                         <th>Price</th>
+                        <?php if($this->session->userdata('role') == 1):?><th style="text-align: center;">Rating</th><?endif;?>
                     </thead>
                   <tbody>
-                      <?php foreach($allBookings as $booking):?>
+                      <?php $index=0; foreach($allBookings as $booking):?>
                       <?php if(!isset($prices[$booking['booking_date']])):?>
                         <?php $prices[$booking['booking_date']] = 0;?>
                       <?php endif;?>
@@ -35,9 +36,51 @@
                            $prices[$booking['booking_date']]+=$booking['price'];
                             $dates[] = $booking['booking_date'];
                         ?>
+                        <?php if($this->session->userdata('role') == 1):?>
+                        <td>
+                            <?
+                               $ratingResult = $this->booking->getRating(array('member_id' => $this->session->userdata('id'), 'guide_id' => $booking['guide_id']));
+                            ?>
+                            <div class="wrapper">
+                                <span class="rating">
+                                    <input id="rating5<?echo $index;?>" type="radio" name="rating<?echo $index;?>" data-guide="<?echo $booking['guide_id']?>" <? if(isset($ratingResult->rating) && $ratingResult->rating == 5):?>checked="checked" <?endif;?> value="5" onclick="setrank(this)">
+                                    <label for="rating5<?echo $index;?>">5</label>
+                                    <input id="rating4<? echo $index;?>" type="radio" name="rating<?echo $index;?>" data-guide="<?echo $booking['guide_id']?>" <? if(isset($ratingResult->rating) && $ratingResult->rating == 4):?>checked="checked" <?endif;?> value="4" onclick="setrank(this)">
+                                    <label for="rating4<? echo $index;?>">4</label>
+                                    <input id="rating3<? echo $index;?>" type="radio" name="rating<?echo $index;?>" data-guide="<?echo $booking['guide_id']?>" <? if(isset($ratingResult->rating) && $ratingResult->rating == 3):?>checked="checked" <?endif;?> value="3" onclick="setrank(this)">
+                                    <label for="rating3<? echo $index;?>">3</label>
+                                    <input id="rating2<? echo $index;?>" type="radio" name="rating<?echo $index;?>" data-guide="<?echo $booking['guide_id']?>" <? if(isset($ratingResult->rating) && $ratingResult->rating == 2):?>checked="checked" <?endif;?> value="2" onclick="setrank(this)">
+                                    <label for="rating2<?echo $index;?>">2</label>
+                                    <input id="rating1<? echo $index;?>" type="radio" name="rating<?echo $index;?>" data-guide="<?echo $booking['guide_id']?>" <? if(isset($ratingResult->rating) && $ratingResult->rating == 1):?>checked="checked" <?endif;?> value="1" onclick="setrank(this)">
+                                    <label for="rating1<?echo $index;?>">1</label>
+                                </span>
+                           </div>
+                           <?$index++;?>
+                        </td>
+                        <?endif;?>
                       </tr>
                      <?endforeach;?>
                   </tbody>
+                  <script>
+                  function setrank(obj){
+                      
+                      guide = jQuery("#"+obj.id).data("guide");
+                       $.ajax({
+                            url: '<?php echo site_url('/admin/bookings/rating'); ?>',
+                            type: 'POST',
+                            data: {
+                                rating: obj.value,
+                                guide_id : guide,
+                            },
+                            dataType: 'json',
+                            success: function(data) {
+                                console.log(data);
+                            }
+                        });
+                   
+                  }
+                  
+                  </script>
                 </table>
               </div>
             </div>

@@ -14,6 +14,20 @@ Class Users extends CI_Model
 	   }
 
 	 }
+         function validatePassword($data){
+            $this->db->where('id', $data['id']);
+            $this->db->where('password', MD5($data['oldpassword']));
+
+            $query = $this->db->get('users');
+
+             if ($query->num_rows() > 0){
+                 return true;
+             }
+             else{
+                 return false;
+             }
+
+         }
 	function mail_exists($key)
 	{
     $this->db->where('email',$key);
